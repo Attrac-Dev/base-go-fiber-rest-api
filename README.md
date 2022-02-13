@@ -43,6 +43,10 @@ In order to get reflex working correctly, we need to do `export PATH=$PATH:$GOPA
 
 <hr>
 
+## Youtube video for how to setup database locally
+
+[video link](https://www.youtube.com/watch?v=fGOsgMcTP2I)
+
 - PostgreSQL database was installed locally with Homebrew
 
 - start PostgreSQL with `brew services postgresql`
@@ -69,7 +73,7 @@ ALTER ROLE base_user CREATEDB;
 
 - Login as base_user
 
-``` 
+```
 psql postgres -U base_user
 ```
 
