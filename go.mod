@@ -1,4 +1,4 @@
-module attracdev/fiber-api
+module github.com/Attrac-Dev/base-go-fiber-rest-api
 
 go 1.17
 
