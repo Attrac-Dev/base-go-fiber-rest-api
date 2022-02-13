@@ -61,24 +61,120 @@ In order to get reflex working correctly, we need to do `export PATH=$PATH:$GOPA
 
 - Create a new user for the database
 
-``` sql
+``` pgsql
 CREATE ROLE base_user WITH LOGIN PASSWORD 'users_password';
 ```
 
 - Create a role for the newly created user, to allow user to create more access
 
-``` sql
+``` pgsql
 ALTER ROLE base_user CREATEDB;
 ```
 
 - Login as base_user
 
-```
+``` pgsql
 psql postgres -U base_user
 ```
 
 - Create a new database with this user
 
-``` sql
+``` pgsql
 CREATE DATABASE base_database;
 ```
+
+## Set up the .env with the database creds
+
+### - Don't forget to add this to the .gitignore
+
+### `.env`
+
+```
+DB_HOST= localhost
+DB_NAME= base_database
+DB_USER= base_user
+DB_PASSWORD= users_password
+DP_PORT= 5432
+```
+
+### Now use `go get` to add the `godotenv` module
+
+``` go
+go get github.com/joho/godotenv
+```
+
+### Create `config.go`
+
+``` go
+package config
+
+import (
+    "fmt"
+    "os"
+
+    "github.com/joho/godotenv"
+)
+
+// Config func to get env value
+func Config(key string) string {
+    // load .env file
+    err := godotenv.Load(".env")
+    if err != nil {
+        fmt.Print("Error loading .env file")
+    }
+        // Return the value of the variable
+    return os.Getenv(key)
+}
+```
+
+## Connecting to the PostgreSQL database
+
+### Add `grom` and `postgres driver` by running
+
+``` go
+go get gorm.io/gorm
+go get gorm.io/driver/postgres
+```
+
+## `/database/connect.go`
+
+``` go
+package database
+
+import (
+    "fmt"
+    "log"
+    "strconv"
+
+    "github.com/percoguru/notes-api-fiber/config"
+    "gorm.io/driver/postgres"
+    "gorm.io/gorm"
+)
+
+// Declare the variable for the database
+var DB *gorm.DB
+
+// ConnectDB connect to db
+func ConnectDB() {
+    var err error
+    p := config.Config("DB_PORT")
+    port, err := strconv.ParseUint(p, 10, 32)
+
+    if err != nil {
+        log.Println("Idiot")
+    }
+
+    // Connection URL to connect to Postgres Database
+    dsn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", config.Config("DB_HOST"), port, config.Config("DB_USER"), config.Config("DB_PASSWORD"), config.Config("DB_NAME"))
+    // Connect to the DB and initialize the DB variable
+    DB, err = gorm.Open(postgres.Open(dsn))
+
+    if err != nil {
+        panic("failed to connect database")
+    }
+
+    fmt.Println("Connection Opened to Database")
+}
+```
+
+### `connect.go` imports the package config. It looks for the package inside the folder `./config`
