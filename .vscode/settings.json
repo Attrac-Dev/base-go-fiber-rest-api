@@ -1,6 +1,20 @@
 {
     "cSpell.words": [
         "cespare",
-        "gofiber"
+        "CREATEDB",
+        "creds",
+        "dbname",
+        "Getenv",
+        "godotenv",
+        "gofiber",
+        "gorm",
+        "grom",
+        "joho",
+        "mydatabase",
+        "myuser",
+        "percoguru",
+        "pgsql",
+        "psql",
+        "strconv"
     ]
 }
