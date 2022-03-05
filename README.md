@@ -204,8 +204,58 @@ The original tutorial was using `notes` as the only model in the project. In ord
 
 ### Make a folder called `internal`
 
-> All of the internal logic for the API will reside in this space. Within the > `internal` directory, back a sub-directory with the name `models`, which will > contain all of the different data models. Within the `models` directory add a `.go` > file with the name of the model (in this repo it is just called `model`).
+> All of the internal logic for the API will reside in this space. Within the `internal` directory, back a sub-directory with the name `models`, which will  contain all of the different data models. Within the `models` directory add a `.go`  file with the name of the model (in this repo it is just called `model`).
 
 ## Auto Migrations
 
-> GORM supports auto migrations, whenever a change is made to a models' struct (add > a column, change a type, add and index, etc.) and restart the server, the changes > will be reflected in the database automatically.
+> GORM supports auto migrations, whenever a change is made to a models' struct (add  a column, change a type, add and index, etc.) and restart the server, the changes will be reflected in the database automatically.
+
+## ADDED DOCKER
+
+Followed video on [Youtube](https://www.youtube.com/watch?v=aHbE3pTyG-Q)
+
+``` bash
+docker run --name postgres-test -e POSTGRES_PASSWORD=password -d -p 5555:5432 postgres:alpine
+```
+
+on local machine, connect to the container with the locally installed version of psql:
+
+``` bash
+psql -h localhost -p 5555 -U postgres
+```
+
+on local machine, bash into the container:
+
+``` bash
+docker exec -it postgres-test bash
+```
+
+then login as the super postgres user:
+
+``` bash
+psql -U postgres
+```
+
+create a new user:
+
+``` bash
+CREATE ROLE base_user WITH LOGIN PASSWORD 'users_password';
+```
+
+set users role:
+
+``` bash
+ALTER ROLE base_user CREATEDB;
+```
+
+create the database and set the new user as the owner:
+
+``` bash
+CREATE DATABASE base_database WITH OWNER base_user
+```
+
+login with user and connect to the new database:
+
+``` bash
+\c base_database base_user
+```
