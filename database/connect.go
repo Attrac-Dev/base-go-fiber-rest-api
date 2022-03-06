@@ -32,8 +32,14 @@ func ConnectDB() {
 	if err != nil {
 		panic("Failed to connect to database")
 	}
-
-	fmt.Println("Connection to DB successful")
+	if port != 5432 {
+		// connected to the docker instance of Postgresql
+		fmt.Println("Connection to Docker Container DB successful")
+	} else {
+		// connected to the default port (which is the local install of Postgresql)
+		fmt.Println("Connection to local DB successful")
+	}
+	
 
 	// Migrate the database
 	DB.AutoMigrate(&model.Note{})

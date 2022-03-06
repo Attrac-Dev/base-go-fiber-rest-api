@@ -100,12 +100,14 @@ PG_CONNECTION_STRING=postgres://myuser@localhost/mydatabase
 
 ### `.env`
 
+*** updated the DB_PORT to jive with the Docker postgres:alpine info later on
+
 ``` bash
 DB_HOST= localhost
 DB_NAME= base_database
 DB_USER= base_user
 DB_PASSWORD= users_password
-DP_PORT= 5432
+DP_PORT= 5555
 ```
 
 ### Now use `go get` to add the `godotenv` module
