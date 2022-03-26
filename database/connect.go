@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/skyler-saville/base-api-fiber/config"
-	model "github.com/skyler-saville/base-api-fiber/internal/models"
+	model "github.com/skyler-saville/base-api-fiber/internal/model"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -42,6 +42,6 @@ func ConnectDB() {
 	
 
 	// Migrate the database
-	DB.AutoMigrate(&model.Note{})
+	DB.AutoMigrate(&model.Task{})
 	fmt.Println("Database has been Migrated")
 }
