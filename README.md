@@ -261,3 +261,38 @@ login with user and connect to the new database:
 ``` bash
 \c base_database base_user
 ```
+
+## Changed from Reflex to Nodemon
+
+You have to install nodemon globally on your machine using:
+
+``` bash
+npm i -g nodemon
+```
+
+Then have to update the makefile to utilize nodemon instead of reflex
+
+``` makefile
+watch: 
+ nodemon --exec "go run" main.go
+```
+
+Now you can start the server in "dev" mode by running
+
+``` bash
+make watch
+```
+
+Then you can test the endpoints of the router with Postman, Insomnia, etc.
+
+### API endpoints for "tasks"
+
+- **POST**   0.0.0.0:3000/api/tasks  _(create task)_
+
+- **GET**   0.0.0.0:3000/api/tasks  _(get all tasks)_
+
+- **GET**   0.0.0.0:3000/api/tasks/:taskID  _(get one task)_
+
+- **PUT**   0.0.0.0:3000/api/tasks/:taskID  _(update a task)_
+
+- **DELETE**   0.0.0.0:3000/api/tasks/:taskID  _(delete a task)_
