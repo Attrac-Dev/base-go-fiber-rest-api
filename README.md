@@ -285,7 +285,19 @@ make watch
 
 Then you can test the endpoints of the router with Postman, Insomnia, etc.
 
-### API endpoints for "tasks"
+## Task Model
+
+- ID uuid.UUID
+
+- Title     *string
+
+- Subtitle  string
+
+- Text      string
+
+- CompletedOnDate   time.Time
+
+## API endpoints for "tasks"
 
 - **POST**   0.0.0.0:3000/api/tasks  _(create task)_
 
